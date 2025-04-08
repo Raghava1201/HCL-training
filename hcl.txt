@@ -1,2 +1,3 @@
 training session
 this is the resolved final line aftewr merge
+

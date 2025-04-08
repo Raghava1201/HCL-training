@@ -1,2 +1,2 @@
 training session
-this is the original line
+this is the resolved final line aftewr merge

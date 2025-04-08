@@ -1,2 +1,5 @@
 training session
 this is the resolved final line aftewr merge
+this is the feature branch line
+
+

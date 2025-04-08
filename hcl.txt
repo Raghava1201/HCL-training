@@ -1,3 +1,5 @@
 training session
 this is the resolved final line aftewr merge
 
+this is main commit 1
+

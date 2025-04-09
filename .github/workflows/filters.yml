@@ -12,8 +12,6 @@ on:
       - 'docs/**'
     tags:
       - 'v1.*'
-    tags-ignore:
-      - 'test-*'
 jobs:
   filter-check:
     runs-on: ubuntu-latest

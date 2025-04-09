@@ -1,20 +1,17 @@
-name: filter worflow
+name: filter Branches and paths
 
 on:
   push:
     branches:
       - main
-    branches-ignore:
-      - dev
     paths:
       - 'src/**'
     paths-ignore:
       - 'docs/**'
-    tags:
-      - 'v1.*'
+
 jobs:
   filter-check:
     runs-on: ubuntu-latest
     steps:
       - name: Display commits
-        run: echo "This workflows passed the filters"
+        run: echo "This workflow passed the branch and path filters"

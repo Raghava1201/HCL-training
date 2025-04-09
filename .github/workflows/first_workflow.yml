@@ -1,0 +1,17 @@
+name: first workflow
+
+on:
+  pull_request_review:
+    types: [submitted]
+jobs:
+  linux-os:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.3.0
+        with:
+          node-version: 20
+      - name: verify node version
+        run: node -v

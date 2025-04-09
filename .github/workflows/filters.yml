@@ -1,0 +1,14 @@
+name: filter Branches and paths
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+jobs:
+  filter-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display commits
+        run: echo "This workflow passed the branch and path filters"

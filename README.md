@@ -1,2 +1,1 @@
-Hello Github Actions
-Devops
+github actions

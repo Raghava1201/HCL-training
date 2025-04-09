@@ -1,6 +1,8 @@
 name: first workflow
 
-on: [push, pull_request_review]
+on:
+  pull_request_review:
+    types: [submitted]
 jobs:
   linux-os:
     runs-on: ubuntu-latest

@@ -1,6 +1,10 @@
 name: first workflow
 
-on: [push, pull_request_review, fork]
+on:
+  pull_request:
+    types: [opened, syncronize, closed]
+  pull_request_review:
+    types: [submitted, edited]
 jobs:
   linux-os:
     runs-on: ubuntu-latest

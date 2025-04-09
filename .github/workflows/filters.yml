@@ -6,9 +6,6 @@ on:
       - main
     paths:
       - 'src/**'
-    paths-ignore:
-      - 'docs/**'
-
 jobs:
   filter-check:
     runs-on: ubuntu-latest

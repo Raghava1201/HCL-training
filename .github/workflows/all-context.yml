@@ -1,0 +1,58 @@
+name: all context
+
+on:
+  workflow_dispatch:
+    inputs:
+      custom_input:
+        description: "custom input from workflow dispatch"
+        required: true
+        default: "default input"
+env:
+  GLOBAL_ENV_VAR: "global_env_value"
+
+jobs:
+  job1:
+    name: context job 1
+    runs-on: ubuntu-latest
+    env:
+      JOB_ENV_VAR: "job_env_value"
+    outputs:
+      job1_output: ${{steps.step1.outputs.steps_output}}
+
+    steps:
+      - name: print all context (step1)
+        id: step1
+        run: |
+          echo "step context: $GITHUB_STEP_SUMMARY"
+          echo "step output message" >> $GITHUB_STEP_SUMMARY
+          echo "step_output=HELLO_from_step" >> $GITHUB_OUTPUT
+        env:
+          STEP_ENV_VAR: "step_env_value"
+
+      - name: show context exmaples
+        run: |
+          echo "env.GLOBAL_ENV_VAR: ${{env.GLOBAL_ENV_VAR}}"
+          echo "env.JOB_ENV_VAR: ${{env.GLOBAL_ENV_VAR}}"
+          echo "env.STEP_ENV_VAR: ${{env.STEP_ENV_VAR}}"
+          echo "job.status: ${{job.status}}"
+          echo "runner.os: ${{runner.os}}"
+          echo "github.actor: ${{github.actor}}"
+          echo "secrets.API_KEY: ${{secrets.API_KEY}}"
+          echo "input.custom_input: ${{inputs.custom_input}}"
+          echo "steps.steps1.outputs.step_output: ${{steps.steps1.outputs.step_output}}
+
+job2:
+  name: context job 2 (matrix and needs)
+  needs: job1
+  runs-on: ubuntu-latest
+  strategy:
+    matrix:
+      node-version: [20, 22]
+      os: [ubuntu-latest, windows-latest]
+  steps:
+    - name: matrix context
+      uses: actions/setup-node@4.3.0
+      run: |
+        echo "matrix os: ${{matrix.os}}"
+        echo "matrix node: ${{matrix.node_version}}"
+        echo "needs output from job1: ${{needs.job1.outputs.job1_output"

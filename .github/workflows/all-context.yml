@@ -17,7 +17,7 @@ jobs:
     env:
       JOB_ENV_VAR: "job_env_value"
     outputs:
-      job1_output: ${{steps.step1.outputs.steps_output}}
+      job1_output: ${{ steps.step1.outputs.step_output }}
 
     steps:
       - name: print all context (step1)
@@ -29,30 +29,33 @@ jobs:
         env:
           STEP_ENV_VAR: "step_env_value"
 
-      - name: show context exmaples
+      - name: show context examples
         run: |
-          echo "env.GLOBAL_ENV_VAR: ${{env.GLOBAL_ENV_VAR}}"
-          echo "env.JOB_ENV_VAR: ${{env.GLOBAL_ENV_VAR}}"
-          echo "env.STEP_ENV_VAR: ${{env.STEP_ENV_VAR}}"
-          echo "job.status: ${{job.status}}"
-          echo "runner.os: ${{runner.os}}"
-          echo "github.actor: ${{github.actor}}"
-          echo "secrets.API_KEY: ${{secrets.API_KEY}}"
-          echo "input.custom_input: ${{inputs.custom_input}}"
-          echo "steps.steps1.outputs.step_output: ${{steps.steps1.outputs.step_output}}
+          echo "env.GLOBAL_ENV_VAR: ${{ env.GLOBAL_ENV_VAR }}"
+          echo "env.JOB_ENV_VAR: ${{ env.JOB_ENV_VAR }}"
+          echo "env.STEP_ENV_VAR: ${{ env.STEP_ENV_VAR }}"
+          echo "job.status: ${{ job.status }}"
+          echo "runner.os: ${{ runner.os }}"
+          echo "github.actor: ${{ github.actor }}"
+          echo "secrets.API_KEY: ${{ secrets.API_KEY }}"
+          echo "input.custom_input: ${{ inputs.custom_input }}"
+          echo "steps.step1.outputs.step_output: ${{ steps.step1.outputs.step_output }}"
 
-job2:
-  name: context job 2 (matrix and needs)
-  needs: job1
-  runs-on: ubuntu-latest
-  strategy:
-    matrix:
-      node-version: [20, 22]
-      os: [ubuntu-latest, windows-latest]
-  steps:
-    - name: matrix context
-      uses: actions/setup-node@4.3.0
-      run: |
-        echo "matrix os: ${{matrix.os}}"
-        echo "matrix node: ${{matrix.node_version}}"
-        echo "needs output from job1: ${{needs.job1.outputs.job1_output"
+  job2:
+    name: context job 2 (matrix and needs)
+    needs: job1
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20, 22]
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: matrix context
+        uses: actions/setup-node@v4.3.0
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: print matrix and needs context
+        run: |
+          echo "matrix os: ${{ matrix.os }}"
+          echo "matrix node: ${{ matrix.node-version }}"
+          echo "needs output from job1: ${{ needs.job1.outputs.job1_output }}"
